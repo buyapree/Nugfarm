@@ -1,0 +1,182 @@
+<!DOCTYPE html><html><head>
+  <base href="/Nugfarm/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Nugfarm — Aplikasi Pendataan Aset Perkebunan">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Nugfarm">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Nugfarm</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #F3EFE6;
+    }
+    #splash {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #F3EFE6 0%, #E4DCC8 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      z-index: 9999;
+      transition: opacity 0.4s ease;
+    }
+    #splash.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .splash-logo {
+      font-size: 40px;
+      font-weight: 800;
+      color: #3A5A40;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .splash-tagline {
+      font-size: 13px;
+      color: #6F4E37;
+      margin-bottom: 28px;
+      letter-spacing: 0.5px;
+    }
+    .splash-leaf {
+      width: 56px;
+      height: 56px;
+      margin-bottom: 18px;
+      animation: sway 1.8s ease-in-out infinite;
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-8deg); }
+      50% { transform: rotate(8deg); }
+    }
+    .splash-bar {
+      width: 160px;
+      height: 4px;
+      background: #DCD3BC;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .splash-bar-fill {
+      height: 100%;
+      width: 40%;
+      background: #3A5A40;
+      border-radius: 4px;
+      animation: loading 1.2s ease-in-out infinite;
+    }
+    @keyframes loading {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(250%); }
+    }
+    .splash-status {
+      margin-top: 14px;
+      font-size: 11px;
+      color: #9C9280;
+    }
+  </style>
+  <style id="splash-screen-style">
+    html {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      background-color: #F3EFE6;
+          background-size: 100% 100%;
+    }
+
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .contain {
+      display:block;
+      width:100%; height:100%;
+      object-fit: contain;
+    }
+
+    .stretch {
+      display:block;
+      width:100%; height:100%;
+    }
+
+    .cover {
+      display:block;
+      width:100%; height:100%;
+      object-fit: cover;
+    }
+
+    .bottom {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      -ms-transform: translate(-50%, 0);
+      transform: translate(-50%, 0);
+    }
+
+    .bottomLeft {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .bottomRight {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #F3EFE6;
+          }
+    }
+  </style>
+  <script id="splash-screen-script">
+    function removeSplashFromWeb() {
+      document.getElementById("splash")?.remove();
+      document.getElementById("splash-branding")?.remove();
+      document.body.style.background = "transparent";
+    }
+  </script>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+</head>
+<body>
+  
+
+  <script>
+    // Ganti teks status biar terasa "hidup" selama loading
+    const pesan = ['Menyiapkan tampilan', 'Menghubungkan ke kebun', 'Hampir siap'];
+    let i = 0;
+    const statusEl = document.getElementById('splash-status');
+    setInterval(() => {
+      i = (i + 1) % pesan.length;
+      if (statusEl) statusEl.textContent = pesan[i];
+    }, 1800);
+
+    // Sembunyikan splash begitu Flutter selesai render frame pertama
+    window.addEventListener('flutter-first-frame', function () {
+      const splash = document.getElementById('splash');
+      if (splash) {
+        splash.classList.add('fade-out');
+        setTimeout(() => splash.remove(), 500);
+      }
+    });
+  </script>
+
+  <script src="flutter_bootstrap.js" async=""></script>
+
+
+</body></html>
